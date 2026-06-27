@@ -102,21 +102,6 @@ export default function Sidebar() {
           <span>Community</span>
         </NavLink>
 
-        {userMeta.role === 'admin' && (
-          <NavLink 
-            to="/admin"
-            className={({ isActive }) => 
-              `flex items-center gap-3 px-4 py-3 rounded-lg font-mono text-xs font-bold uppercase tracking-wider transition-all duration-200 ${
-                isActive 
-                  ? 'bg-amber-500/10 text-amber-400 border-r-4 border-amber-500' 
-                  : 'text-[#94A3B8] hover:text-amber-400 hover:bg-slate-800/40 hover:translate-x-1'
-              }`
-            }
-          >
-            <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 0" }}>admin_panel_settings</span>
-            <span>Admin Control</span>
-          </NavLink>
-        )}
       </nav>
 
       {/* Promo Box */}

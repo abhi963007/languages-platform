@@ -9,40 +9,40 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#06B6D4',
-          container: '#002855',
-          fixed: '#d6e3ff',
-          'fixed-dim': '#aac7fd',
+          DEFAULT: '#2563EB', // Electric Blue
+          container: '#1E3A8A', // Deep Blue
+          fixed: '#DBEAFE',
+          'fixed-dim': '#93C5FD',
         },
         secondary: {
-          DEFAULT: '#006875',
-          container: '#00e3fd',
-          fixed: '#9cf0ff',
-          'fixed-dim': '#00daf3',
+          DEFAULT: '#3B82F6', // Royal Blue Accent
+          container: '#1D4ED8', // Royal Blue
+          fixed: '#EFF6FF',
+          'fixed-dim': '#60A5FA',
         },
         background: {
-          DEFAULT: '#0A1128',
-          light: '#f5f8f8',
-          dark: '#0f2023',
+          DEFAULT: '#0B132B', // Midnight Blue
+          light: '#F8FAFC',
+          dark: '#0B132B',
         },
         surface: {
-          DEFAULT: '#151E32',
-          glass: 'rgba(255, 255, 255, 0.7)',
-          bright: '#f9f9ff',
-          dim: '#cfdaf2',
-          container: '#e7eeff',
-          'container-high': '#dee8ff',
-          'container-highest': '#d8e3fb',
-          'container-low': '#f0f3ff',
-          'container-lowest': '#ffffff',
-          variant: '#d8e3fb',
+          DEFAULT: '#1C2541', // Dark Navy Surface
+          glass: 'rgba(28, 37, 65, 0.7)',
+          bright: '#F8FAFC',
+          dim: '#1E293B',
+          container: '#EFF6FF',
+          'container-high': '#DBEAFE',
+          'container-highest': '#BFDBFE',
+          'container-low': '#F0F5FF',
+          'container-lowest': '#FFFFFF',
+          variant: '#EFF6FF',
         },
         accent: {
-          DEFAULT: '#4F46E5',
-          gold: '#FFD700',
+          DEFAULT: '#3B82F6',
+          gold: '#F59E0B',
         },
         energy: {
-          pink: '#FF2E63',
+          pink: '#EF4444', // Red/Crimson
         },
         text: {
           main: '#F8FAFC',

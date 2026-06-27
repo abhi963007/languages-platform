@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 
 export default function Auth() {
   const { login, signup, courses } = useApp();
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,20 +15,39 @@ export default function Auth() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    // Set signup mode based on pathname
+    if (location.pathname === '/signup') {
+      setIsSignUp(true);
+    } else {
+      setIsSignUp(false);
+    }
+  }, [location.pathname]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
     try {
+      let loggedInUser = null;
       if (isSignUp) {
-        const { error: signUpError } = await signup(email, password, fullName, prefLang);
+        const { data, error: signUpError } = await signup(email, password, fullName, prefLang);
         if (signUpError) throw signUpError;
+        loggedInUser = data?.user;
       } else {
-        const { error: signInError } = await login(email, password);
+        const { data, error: signInError } = await login(email, password);
         if (signInError) throw signInError;
+        loggedInUser = data?.user;
       }
-      navigate('/dashboard');
+
+      // Check role and redirect appropriately
+      const role = loggedInUser?.user_metadata?.role;
+      if (role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/dashboard');
+      }
     } catch (err) {
       setError(err.message || 'Authentication failed');
     } finally {
@@ -40,9 +61,11 @@ export default function Auth() {
       <div className="absolute top-[-20%] left-[-20%] w-[60%] h-[60%] rounded-full bg-[#4F46E5]/10 blur-[150px] pointer-events-none"></div>
       <div className="absolute bottom-[-20%] right-[-20%] w-[60%] h-[60%] rounded-full bg-[#06B6D4]/10 blur-[150px] pointer-events-none"></div>
 
-      <div className="w-full max-w-md glass-panel p-8 rounded-2xl relative z-10 border border-slate-800 bg-[#151E32]/70 backdrop-blur-xl shadow-2xl">
+      <div className="w-full max-w-md glass-panel p-8 rounded-2xl relative z-10 border border-slate-800 bg-[#151E32]/70 backdrop-blur-xl shadow-2xl animate-fadeIn">
         <div className="text-center mb-8">
-          <span className="font-display text-3xl font-black text-[#F8FAFC] tracking-tighter">LinguaVerse</span>
+          <Link to="/" className="font-display text-3xl font-black text-[#F8FAFC] tracking-tighter hover:text-[#06B6D4] transition-colors">
+            LinguaVerse
+          </Link>
           <p className="text-xs font-mono uppercase tracking-widest text-[#06B6D4] mt-2">
             {isSignUp ? 'Forge a new path' : 'Resume your journey'}
           </p>
@@ -119,12 +142,21 @@ export default function Auth() {
         </form>
 
         <div className="mt-8 text-center border-t border-[#1E293B] pt-6">
-          <button 
-            onClick={() => setIsSignUp(!isSignUp)}
-            className="text-xs font-mono uppercase tracking-wider text-[#94A3B8] hover:text-[#06B6D4] transition-colors"
-          >
-            {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
-          </button>
+          {isSignUp ? (
+            <Link 
+              to="/login"
+              className="text-xs font-mono uppercase tracking-wider text-[#94A3B8] hover:text-[#06B6D4] transition-colors"
+            >
+              Already have an account? Sign In
+            </Link>
+          ) : (
+            <Link 
+              to="/signup"
+              className="text-xs font-mono uppercase tracking-wider text-[#94A3B8] hover:text-[#06B6D4] transition-colors"
+            >
+              Don't have an account? Sign Up
+            </Link>
+          )}
         </div>
       </div>
     </div>
